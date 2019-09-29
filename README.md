@@ -1,5 +1,5 @@
 # shadow-fighter
-This app was applies Open Pose to simultaneously track the movements of two players, from two separate video feeds. 
+This app applies Open Pose to simultaneously track the movements of two players, from two separate video feeds. 
 The players can physically interact in a virtual space and play a boxing game, even if they are in separate rooms!
 This was created for the ImplementAI 2019 Hackathon
 INSERT PICTURE HERE
