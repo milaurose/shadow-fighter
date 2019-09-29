@@ -7,7 +7,7 @@ INSERT PICTURE HERE
 ## Open Pose Arcade!
 This method is really flexible and can be run on a standard laptop with no special equipment. We further demonstrated the flexibility by creating two-player physical versions of Atari and Pong, where each player controls their moves with physical movements instead of traditional key strokes. This brings back retro games with a new interactive twist that transforms sedentary individual games into collaborative exercise.
 
-[Demo: Stand-alone web Atari Breakout using posenet for controls](atari-posenet.firebaseapp.com)
+[Demo: Stand-alone web Atari Breakout using posenet for controls](https://atari-posenet.firebaseapp.com)
 
 ## Workflow
 1. Local clients uses Flask to broadcast each player's video feeds on the local area network via a multi-threaded video capture class.
