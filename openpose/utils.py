@@ -149,7 +149,7 @@ def parse_info2(p,h,w):
     return joint_info
 
 
-def draw_human2(img,parts,screen_height,human_ratio,base,gradius,hradius,thickness,line_color,gcolor,numbering=False):
+def draw_human2(x_trans,img,parts,screen_height,human_ratio,base,gradius,hradius,thickness,line_color,gcolor,numbering=False):
     connections=[(0,1),(1,2),(1,5),(1,8),(1,11),(2,3),(3,4),(5,6),(6,7),(8,9),(9,10),(11,12),(12,13)]
     keys=list(parts.keys())
     
@@ -186,6 +186,7 @@ def draw_human2(img,parts,screen_height,human_ratio,base,gradius,hradius,thickne
         y_trans=base-foot
         for i in parts.keys():
             parts[i]['y']=int(parts[i]['y']+y_trans)
+            parts[i]['x']=int(parts[i]['x']+x_trans)
            
         for pair in connections:
     #        print(pair)
@@ -310,26 +311,31 @@ def update_hp(img, score1, score2):
   max_2 = 500
   
   #player 1 score
-  img = cv2.rectangle(img,(max_1-100,450),(max_1,500),(0,128,0),cv2.FILLED)
+  img = cv2.rectangle(img,(max_1-100,450),(max_1,500),(0,255,0),cv2.FILLED)
   img = cv2.rectangle(img,(max_1-100+score1,450),(max_1,500),(0,0,255), cv2.FILLED)
   
-  img = cv2.rectangle(img,(max_2-100,450),(max_2,500),(0,128,0),cv2.FILLED)
+  img = cv2.rectangle(img,(max_2-100,450),(max_2,500),(0,255,0),cv2.FILLED)
   img = cv2.rectangle(img,(max_2+score2-100,450),(max_2,500),(0,0,255), cv2.FILLED)
   
   if score1==100:
-    img = cv2.rectangle(img,(max_1-100,450),(max_1,500),(0,128,0),cv2.FILLED)
+      
+    img = cv2.rectangle(img,(max_1-100,450),(max_1,500),(0,255,0),cv2.FILLED)
   if score2==100:
-    img = cv2.rectangle(img,(max_2-100,450),(max_2,500),(0,128,0),cv2.FILLED)
+    img = cv2.rectangle(img,(max_2-100,450),(max_2,500),(0,255,0
+                        ),cv2.FILLED)
   
   if score1 <= 0 and score2!=0:
-    msg='PLAYER 2 WINS!!!'
-    return img,msg
+      cv2.putText(img, 'K.O!', (120, 200), cv2.FONT_HERSHEY_COMPLEX, 5, (0, 0, 255), 5, cv2.LINE_AA)
+      msg='PLAYER 2 WINS!!!'
+      return img,msg
   elif score2 <= 0 and score1!=0:
-    msg='PLAYER 1 WINS!!!'
-    return img,msg
+      cv2.putText(img, 'K.O!', (120, 200), cv2.FONT_HERSHEY_COMPLEX, 5, (0, 0, 255), 5, cv2.LINE_AA)
+      msg='PLAYER 1 WINS!!!'
+      return img,msg
   elif score1<=0 and score2<=0:
-    msg='DRAW!!!'
-    return img,msg
+      cv2.putText(img, 'K.O!', (120, 200), cv2.FONT_HERSHEY_COMPLEX, 5, (0, 0, 255), 5, cv2.LINE_AA)
+      msg='DRAW!!!'
+      return img,msg
   else:
       return img,0
 

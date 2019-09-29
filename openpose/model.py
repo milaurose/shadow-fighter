@@ -10,6 +10,8 @@ import cv2
 import argparse
 import numpy as np
 import copy
+from playsound import playsound
+
 
 k=0
 h=600
@@ -72,11 +74,13 @@ p2_life=100
 
 status=1
 old_frame=np.zeros((game_h,game_w,d))
+x_trans=100
 
 first=True
 
 while True:
     if p1_life==0 or p2_life==0:
+#        playsound('KO.mp3')
         h=600
         w=800
         xadj=150
@@ -97,19 +101,17 @@ while True:
             p2=persons[1]
     
             joint_vec1=utils.parse_info2(p1,game_h,game_w)
-            new_canvas,new_joint_vec1=utils.draw_human2(copy.deepcopy(canvas),joint_vec1,game_h,0.5,game_h-50,gradius,hradius,thickness,blue,white)
-    
-            
+            new_canvas,new_joint_vec1=utils.draw_human2(x_trans,copy.deepcopy(canvas),joint_vec1,game_h,0.4,game_h-50,gradius,hradius,thickness,blue,white)
+
             joint_vec2=utils.parse_info2(p2,game_h,game_w)
-            new_canvas,new_joint_vec2=utils.draw_human2(copy.deepcopy(new_canvas),joint_vec2,game_h,0.5,game_h-50,gradius,hradius,thickness,green,white)
-    
+            new_canvas,new_joint_vec2=utils.draw_human2(x_trans,copy.deepcopy(new_canvas),joint_vec2,game_h,0.4,game_h-50,gradius,hradius,thickness,green,white)
+
             if new_joint_vec1 is None or new_joint_vec2 is None:
                 continue
             
-            
+
             health,pA_safe,pB_safe=utils.collision_detection(new_joint_vec1, new_joint_vec2, pB_safe, pA_safe,hradius)
-    #        print(health)
-    #        health, pA_safe, pB_safe=utils.collision_detection(joint_vec1, joint_vec2, pB_safe, pA_safe,50)
+
             p1_life+=health[0]*10
             p2_life+=health[1]*10
     
@@ -122,6 +124,7 @@ while True:
                 if 0 in new_joint_vec1.keys():
                     head2=new_joint_vec2[0]
                     cv2.circle(new_canvas, (head2['x'],head2['y']), hradius , red, -1)
+                    
             
     #        print(new_joint_vec1)
     #        
@@ -141,7 +144,7 @@ while True:
             else:
                 cv2.imshow('',new_canvas)
     else:
-        cv2.putText(old_frame, 'PLAYER NOT DETECTED!', (int(w/2), int(h/2)), cv2.FONT_HERSHEY_COMPLEX, 1, red, 5, cv2.LINE_AA)
+        cv2.putText(old_frame, 'PLAYER NOT DETECTED!', (int(w/2), int(h/2)), cv2.FONT_HERSHEY_COMPLEX, 1, red, 2, cv2.LINE_AA)
         cv2.imshow('',old_frame)
 
     if cv2.waitKey(1) & 0xff == ord('q'):
