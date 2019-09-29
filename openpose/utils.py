@@ -164,51 +164,55 @@ def draw_human2(img,parts,screen_height,human_ratio,base,gradius,hradius,thickne
             X.append(joint_x)
             Y.append(joint_y)
     original_height=max(Y)-min(Y)
-    target_height=screen_height*human_ratio
-    h_scale=target_height/original_height
+    print(original_height)
+    if original_height>0:
+        target_height=screen_height*human_ratio
+        h_scale=target_height/original_height
+        
+        for i in parts.keys():
+            parts[i]['x']=int(parts[i]['x']*h_scale)
+            parts[i]['y']=int(parts[i]['y']*h_scale)
+        
+        X=[]
+        Y=[]
+        for i in parts.keys():
+            if i<14:
+                joint=parts[i]
+                joint_x=int(joint['x'])
+                joint_y=int(joint['y'])
+                X.append(joint_x)
+                Y.append(joint_y)
+        foot=max(Y)
+        y_trans=base-foot
+        for i in parts.keys():
+            parts[i]['y']=int(parts[i]['y']+y_trans)
+           
+        for pair in connections:
+    #        print(pair)
+            start=pair[0]
+            end=pair[1]
+            if start in keys and end in keys:
+                x1=int(parts[start]['x'])
+                x2=int(parts[end]['x'])
+                y1=int(parts[start]['y'])
+                y2=int(parts[end]['y'])
+                cv2.line(img, (x1, y1), (x2, y2), line_color , thickness)
+                
+        if 4 in parts.keys() and 7 in parts.keys():
+            rhand=parts[4]
+            lhand=parts[7]
     
-    for i in parts.keys():
-        parts[i]['x']=int(parts[i]['x']*h_scale)
-        parts[i]['y']=int(parts[i]['y']*h_scale)
+            cv2.circle(img, (rhand['x'],rhand['y']), gradius , gcolor, -1)
+            cv2.circle(img, (lhand['x'],lhand['y']), gradius , gcolor, -1)
+        
+        if 0 in parts.keys():
+            head=parts[0]
     
-    X=[]
-    Y=[]
-    for i in parts.keys():
-        if i<14:
-            joint=parts[i]
-            joint_x=int(joint['x'])
-            joint_y=int(joint['y'])
-            X.append(joint_x)
-            Y.append(joint_y)
-    foot=max(Y)
-    y_trans=base-foot
-    for i in parts.keys():
-        parts[i]['y']=int(parts[i]['y']+y_trans)
-       
-    for pair in connections:
-#        print(pair)
-        start=pair[0]
-        end=pair[1]
-        if start in keys and end in keys:
-            x1=int(parts[start]['x'])
-            x2=int(parts[end]['x'])
-            y1=int(parts[start]['y'])
-            y2=int(parts[end]['y'])
-            cv2.line(img, (x1, y1), (x2, y2), line_color , thickness)
-            
-    if 4 in parts.keys() and 7 in parts.keys():
-        rhand=parts[4]
-        lhand=parts[7]
-
-        cv2.circle(img, (rhand['x'],rhand['y']), gradius , gcolor, -1)
-        cv2.circle(img, (lhand['x'],lhand['y']), gradius , gcolor, -1)
+            cv2.circle(img, (head['x'],head['y']), hradius , line_color, -1)
     
-    if 0 in parts.keys():
-        head=parts[0]
-
-        cv2.circle(img, (head['x'],head['y']), hradius , line_color, -1)
-
-    return img, parts
+        return img, parts
+    else:
+        return img,None
 
 
 def draw_human(img,parts,h,w,numbering=False):
