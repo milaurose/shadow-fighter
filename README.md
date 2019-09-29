@@ -1,8 +1,7 @@
 # shadow-fighter
 This app applies Open Pose to simultaneously track the movements of two players, from two separate video feeds. 
 The players can physically interact in a virtual space and play a boxing game, even if they are in separate rooms!
-This was created for the ImplementAI 2019 Hackathon
-INSERT PICTURE HERE
+This was created for the ImplementAI 2019 Hackathon.
 
 ## Open Pose Arcade!
 This method is really flexible and can be run on a standard laptop with no special equipment. We further demonstrated the flexibility by creating two-player physical versions of Atari and Pong, where each player controls their moves with physical movements instead of traditional key strokes. This brings back retro games with a new interactive twist that transforms sedentary individual games into collaborative exercise.
