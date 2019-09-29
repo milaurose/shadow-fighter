@@ -8,6 +8,8 @@ This method is really flexible and can be run on a standard laptop with no speci
 
 [Demo: Stand-alone web Atari Breakout using posenet for controls](https://atari-posenet.firebaseapp.com)
 
+[Demo: Stand-alone web multiplayer Pong using posenet for controls](https://atari-posenet.firebaseapp.com/pong.html)
+
 ## Workflow
 1. Local clients uses Flask to broadcast each player's video feeds on the local area network via a multi-threaded video capture class.
 2. Use ngrok port forwarding to make each video feed public accessible
